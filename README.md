@@ -24,8 +24,9 @@ A full-stack application that allows users to submit product reviews via WhatsAp
 
 ## 🚀 Live Demo
 
-- **Backend API**: `https://web-production-0e295.up.railway.app`
-- **Frontend**: Run locally with `npm start` (connects to live backend)
+- **🌐 Frontend**: [https://komal0821.github.io/Product-Review_collector](https://komal0821.github.io/Product-Review_collector)
+- **🔌 Backend API**: `https://web-production-0e295.up.railway.app`
+- **📱 Complete System**: Frontend connects to live Railway backend
 
 ## 🚀 Quick Start
 
@@ -190,16 +191,15 @@ CREATE TABLE reviews (
 - **Database**: PostgreSQL on Railway
 - **Auto-deployment**: Connected to GitHub main branch
 
-### Frontend (Local Development)
+### Frontend (GitHub Pages) ✅ Already Deployed
+- **URL**: `https://komal0821.github.io/Product-Review_collector`
+- **Auto-deployment**: Run `npm run deploy` to update
+- **Connected to**: Live Railway backend
+
+### Local Development
 ```bash
 cd frontend
-npm start
-```
-
-### Production Frontend Deployment
-For production, update the API URL in `frontend/src/App.js`:
-```javascript
-const API_BASE_URL = 'https://web-production-0e295.up.railway.app';
+npm start  # Runs on localhost:3000
 ```
 
 ## 🔧 Troubleshooting
@@ -228,11 +228,11 @@ const API_BASE_URL = 'https://web-production-0e295.up.railway.app';
 
 ## ✅ Current Status
 
-- ✅ **Backend**: Deployed on Railway
+- ✅ **Backend**: Deployed on Railway (`https://web-production-0e295.up.railway.app`)
+- ✅ **Frontend**: Deployed on GitHub Pages (`https://komal0821.github.io/Product-Review_collector`)
 - ✅ **Database**: PostgreSQL connected and working
 - ✅ **WhatsApp Integration**: Twilio webhook configured and working
-- ✅ **Frontend**: React app with star ratings and animations
-- ✅ **Full Flow**: WhatsApp → Database → Frontend working perfectly
+- ✅ **Full Flow**: WhatsApp → Database → Live Frontend working perfectly
 
 ## 🎯 Features Implemented
 
