@@ -13,10 +13,6 @@ function App() {
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ total: 0, thisWeek: 0 });
 
-  useEffect(() => {
-    fetchReviews();
-  }, [fetchReviews]);
-
   const fetchReviews = useCallback(async () => {
     try {
       setLoading(true);
@@ -33,6 +29,10 @@ function App() {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   const calculateStats = (reviewsData) => {
     const now = new Date();
