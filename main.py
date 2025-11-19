@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Depends, Form, HTTPException
+from fastapi import FastAPI, Depends, Form, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, Response
 from sqlalchemy.orm import Session
 from typing import List
 import os
@@ -73,11 +74,13 @@ async def whatsapp_webhook(
         # Reset session for next review
         conversation_manager.reset_session(contact_number)
     
-    # Return TwiML response
-    return f"""<?xml version="1.0" encoding="UTF-8"?>
+    # Return TwiML response with proper Content-Type
+    twiml_response = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Message>{response_message}</Message>
 </Response>"""
+    
+    return Response(content=twiml_response, media_type="application/xml")
 
 @app.get("/api/reviews", response_model=List[ReviewResponse])
 async def get_reviews(db: Session = Depends(get_db)):
