@@ -26,7 +26,14 @@ A full-stack application that allows users to submit product reviews via WhatsAp
 
 - **🌐 Frontend**: [https://komal0821.github.io/Product-Review_collector](https://komal0821.github.io/Product-Review_collector)
 - **🔌 Backend API**: `https://web-production-0e295.up.railway.app`
+- **📱 WhatsApp Number**: `+14155238886` (Send "Hi" to start)
 - **📱 Complete System**: Frontend connects to live Railway backend
+
+### 🎯 Try It Now!
+1. **Visit**: [https://komal0821.github.io/Product-Review_collector](https://komal0821.github.io/Product-Review_collector)
+2. **Text**: `+14155238886` with "Hi"
+3. **Follow the conversation** to submit a review
+4. **Refresh the website** to see your review appear!
 
 ## 🚀 Quick Start
 
@@ -79,7 +86,7 @@ The frontend will be available at `http://localhost:3000`
 1. **Create Twilio Account**: Sign up at [twilio.com](https://www.twilio.com)
 2. **Access WhatsApp Sandbox**: Go to Console > Messaging > Try it out > Send a WhatsApp message
 3. **Configure Webhook**: Set webhook URL to `https://web-production-0e295.up.railway.app/webhook/whatsapp`
-4. **Test**: Send "Hi" to your Twilio WhatsApp sandbox number
+4. **Test**: Send "Hi" to `+14155238886` (Twilio WhatsApp sandbox number)
 
 ## 📱 Conversation Flow
 
