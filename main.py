@@ -20,8 +20,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create database tables on startup
-create_tables()
+# Create database tables on startup (with error handling)
+try:
+    create_tables()
+    print("✅ Database tables created successfully")
+except Exception as e:
+    print(f"⚠️ Database connection failed: {e}")
+    print("App will start without database - add DATABASE_URL environment variable")
 
 class ReviewResponse(BaseModel):
     id: int
@@ -84,7 +89,11 @@ async def get_reviews(db: Session = Depends(get_db)):
 
 @app.get("/")
 async def root():
-    return {"message": "WhatsApp Product Reviews API is running!"}
+    return {"message": "WhatsApp Product Reviews API is running!", "status": "healthy"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "whatsapp-reviews"}
 
 if __name__ == "__main__":
     import uvicorn
