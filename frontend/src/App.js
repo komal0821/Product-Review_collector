@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Star, RefreshCw, Users, Calendar, Phone, Sparkles, TrendingUp } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -15,9 +15,9 @@ function App() {
 
   useEffect(() => {
     fetchReviews();
-  }, []);
+  }, [fetchReviews]);
 
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/reviews`);
@@ -32,7 +32,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const calculateStats = (reviewsData) => {
     const now = new Date();
