@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Product-Review_collector/static/css/main.ab8d68da.css",
-    "main.js": "/Product-Review_collector/static/js/main.3306d83b.js",
+    "main.js": "/Product-Review_collector/static/js/main.b37f22ed.js",
     "index.html": "/Product-Review_collector/index.html",
     "main.ab8d68da.css.map": "/Product-Review_collector/static/css/main.ab8d68da.css.map",
-    "main.3306d83b.js.map": "/Product-Review_collector/static/js/main.3306d83b.js.map"
+    "main.b37f22ed.js.map": "/Product-Review_collector/static/js/main.b37f22ed.js.map"
   },
   "entrypoints": [
     "static/css/main.ab8d68da.css",
-    "static/js/main.3306d83b.js"
+    "static/js/main.b37f22ed.js"
   ]
 }
