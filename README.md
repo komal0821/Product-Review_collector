@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WhatsApp Product Reviews Application
 
 A full-stack application that allows users to submit product reviews via WhatsApp conversations. The system processes messages through Twilio, stores reviews in PostgreSQL, and displays them in a React frontend.
@@ -205,3 +206,6 @@ TWILIO_PHONE_NUMBER=whatsapp:+14155238886
 ## 📄 License
 
 This project is licensed under the MIT License.
+=======
+# Product-Review_collector
+>>>>>>> 036148d8adf52b7e9455c9520a03a19791196153
