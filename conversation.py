@@ -65,7 +65,6 @@ class ConversationManager:
             return f"Thanks {session.user_name} -- your review for {session.product_name} has been recorded."
         
         else:
-            # Reset and start new conversation
             self.reset_session(contact_number)
             return "Which product is this review for?"
 

@@ -9,7 +9,6 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://komal.priya@localhost:5432/whatsapp_reviews")
 
-# Handle Railway/Render PostgreSQL URL format
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 

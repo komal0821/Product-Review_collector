@@ -12,7 +12,6 @@ from pydantic import BaseModel
 
 app = FastAPI(title="WhatsApp Product Reviews API")
 
-# Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "https://localhost:3000", "*"],
@@ -21,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create database tables on startup (with error handling)
 try:
     create_tables()
     print("✅ Database tables created successfully")
@@ -46,22 +44,16 @@ async def whatsapp_webhook(
     Body: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    """
-    Webhook endpoint for receiving WhatsApp messages from Twilio
-    """
     contact_number = From.replace("whatsapp:", "")
     message = Body.strip()
     
-    # Handle initial greeting
     if message.lower() in ["hi", "hello", "hey", "start"]:
         response_message = "Which product is this review for?"
     else:
         response_message = conversation_manager.process_message(contact_number, message)
     
-    # Check if conversation is completed and save to database
     session = conversation_manager.get_session(contact_number)
     if session.state == ConversationState.COMPLETED:
-        # Save review to database
         review = Review(
             contact_number=contact_number,
             user_name=session.user_name,
@@ -70,11 +62,8 @@ async def whatsapp_webhook(
         )
         db.add(review)
         db.commit()
-        
-        # Reset session for next review
         conversation_manager.reset_session(contact_number)
     
-    # Return TwiML response with proper Content-Type
     twiml_response = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Message>{response_message}</Message>
@@ -84,9 +73,6 @@ async def whatsapp_webhook(
 
 @app.get("/api/reviews", response_model=List[ReviewResponse])
 async def get_reviews(db: Session = Depends(get_db)):
-    """
-    Get all product reviews
-    """
     reviews = db.query(Review).order_by(Review.created_at.desc()).all()
     return reviews
 

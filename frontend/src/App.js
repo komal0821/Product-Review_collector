@@ -11,7 +11,7 @@ function App() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [stats, setStats] = useState({ total: 0, thisWeek: 0, avgRating: 0 });
+  const [stats, setStats] = useState({ total: 0, thisWeek: 0 });
 
   useEffect(() => {
     fetchReviews();
@@ -44,8 +44,7 @@ function App() {
 
     setStats({
       total: reviewsData.length,
-      thisWeek: thisWeekReviews.length,
-      avgRating: 4.5 // Mock rating for demo
+      thisWeek: thisWeekReviews.length
     });
   };
 
@@ -225,11 +224,6 @@ function App() {
             <TrendingUp size={32} />
             <h3>{stats.thisWeek}</h3>
             <p>This Week</p>
-          </motion.div>
-          <motion.div className="stat-card" whileHover={{ scale: 1.05 }}>
-            <Star size={32} />
-            <h3>{stats.avgRating}</h3>
-            <p>Avg Rating</p>
           </motion.div>
         </div>
       </motion.section>
