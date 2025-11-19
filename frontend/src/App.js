@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://web-production-0e295.up.railway.app';
 
 function App() {
   const [reviews, setReviews] = useState([]);
