@@ -1,0 +1,91 @@
+from fastapi import FastAPI, Depends, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from typing import List
+import os
+from datetime import datetime
+
+from database import get_db, Review, create_tables
+from conversation import conversation_manager, ConversationState
+from pydantic import BaseModel
+
+app = FastAPI(title="WhatsApp Product Reviews API")
+
+# Enable CORS for React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Create database tables on startup
+create_tables()
+
+class ReviewResponse(BaseModel):
+    id: int
+    contact_number: str
+    user_name: str
+    product_name: str
+    product_review: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+@app.post("/webhook/whatsapp")
+async def whatsapp_webhook(
+    From: str = Form(...),
+    Body: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    """
+    Webhook endpoint for receiving WhatsApp messages from Twilio
+    """
+    contact_number = From.replace("whatsapp:", "")
+    message = Body.strip()
+    
+    # Handle initial greeting
+    if message.lower() in ["hi", "hello", "hey", "start"]:
+        response_message = "Which product is this review for?"
+    else:
+        response_message = conversation_manager.process_message(contact_number, message)
+    
+    # Check if conversation is completed and save to database
+    session = conversation_manager.get_session(contact_number)
+    if session.state == ConversationState.COMPLETED:
+        # Save review to database
+        review = Review(
+            contact_number=contact_number,
+            user_name=session.user_name,
+            product_name=session.product_name,
+            product_review=session.product_review
+        )
+        db.add(review)
+        db.commit()
+        
+        # Reset session for next review
+        conversation_manager.reset_session(contact_number)
+    
+    # Return TwiML response
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Message>{response_message}</Message>
+</Response>"""
+
+@app.get("/api/reviews", response_model=List[ReviewResponse])
+async def get_reviews(db: Session = Depends(get_db)):
+    """
+    Get all product reviews
+    """
+    reviews = db.query(Review).order_by(Review.created_at.desc()).all()
+    return reviews
+
+@app.get("/")
+async def root():
+    return {"message": "WhatsApp Product Reviews API is running!"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
